@@ -1,5 +1,6 @@
 import React from 'react'
 import {geolocated, geoPropTypes} from 'react-geolocated'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 class Legislators extends React.Component {
   constructor(props) {
@@ -20,14 +21,26 @@ class Legislators extends React.Component {
     }
   }
 
-  render () {    
+  render () {
     return this.state.repArray ?
       <div>
-        <ul>
-          <p>{extractContactInfo(this.state.repArray[0])}</p>
-          <p>{extractContactInfo(this.state.repArray[1])}</p>
-          <p>{extractContactInfo(this.state.repArray[2])}</p>
-        </ul>
+        <Grid>
+          <Row>
+            <Col xs={4}>{extractContactInfo(this.state.repArray[0])}</Col>
+            <Col xs={4}>{extractContactInfo(this.state.repArray[1])}</Col>
+            <Col xs={4}>{extractContactInfo(this.state.repArray[2])}</Col>
+          </Row>
+          <Row>
+            <Col xs={4}>Phone Number</Col>
+            <Col xs={4}>Phone Number</Col>
+            <Col xs={4}>Phone Number</Col>
+          </Row>
+          <Row>
+            <Col xs={4}>Email</Col>
+            <Col xs={4}>Email</Col>
+            <Col xs={4}>Email</Col>
+          </Row>
+        </Grid>
       </div>
       : <div>...Loading</div>
   }

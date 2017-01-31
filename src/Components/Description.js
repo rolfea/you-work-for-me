@@ -11,5 +11,3 @@ export default class Description extends React.Component {
     )
   }
 }
-/* List Component with district and state props passed in
-<List dist={this.props.dist} state={this.props.state} /> */
