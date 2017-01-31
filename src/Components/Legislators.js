@@ -1,6 +1,8 @@
 import React from 'react'
 import {geolocated, geoPropTypes} from 'react-geolocated'
 import { Grid, Row, Col } from 'react-bootstrap'
+import Loader from './Loader'
+import styled from 'styled-components'
 
 class Legislators extends React.Component {
   constructor(props) {
@@ -25,24 +27,25 @@ class Legislators extends React.Component {
     return this.state.repArray ?
       <div>
         <Grid>
-          <Row>
+          <StyledRow>
             <Col xs={4}>{extractContactInfo(this.state.repArray[0])}</Col>
+            {console.log(this.state.repArray[0])}
             <Col xs={4}>{extractContactInfo(this.state.repArray[1])}</Col>
             <Col xs={4}>{extractContactInfo(this.state.repArray[2])}</Col>
-          </Row>
-          <Row>
+          </StyledRow>
+          <StyledRow>
             <Col xs={4}>Phone Number</Col>
             <Col xs={4}>Phone Number</Col>
             <Col xs={4}>Phone Number</Col>
-          </Row>
-          <Row>
+          </StyledRow>
+          <StyledRow>
             <Col xs={4}>Email</Col>
             <Col xs={4}>Email</Col>
             <Col xs={4}>Email</Col>
-          </Row>
+          </StyledRow>
         </Grid>
       </div>
-      : <div>...Loading</div>
+      : <Loader />
   }
 }
 
@@ -59,3 +62,7 @@ function extractContactInfo(repObject) {
   const returnedString = `${repObject.first_name} ${repObject.last_name} ${repObject.phone}`
   return returnedString
 }
+
+const StyledRow = styled(Grid)`
+  transition: opacity 1s ease-in-out;
+`;
