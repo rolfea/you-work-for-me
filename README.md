@@ -1,6 +1,6 @@
 ## **You Work for Me**
 Contact your congressional representatives and tell them that
-[You Work for Me](youworkforme.netlify.com)
+[**You Work for Me**](https://you-work-for-me.netlify.com)
 ___
 ### Installation and Configuration
 
