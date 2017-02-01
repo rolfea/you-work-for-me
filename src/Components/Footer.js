@@ -6,9 +6,9 @@ export default class Footer extends React.Component {
     return (
       <div>
         <StyledFooter>
-        <a href="https://www.netlify.com">
-<img style={{opacity: 1, borderStyle: "hidden"}} src="https://www.netlify.com/img/global/badges/netlify-light.svg" />
-</a>
+          <a href="https://www.netlify.com">
+            <img role="presentation" src="https://www.netlify.com/img/global/badges/netlify-light.svg" />
+          </a>                    
         </StyledFooter>
       </div>
     )

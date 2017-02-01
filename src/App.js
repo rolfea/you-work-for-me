@@ -7,7 +7,7 @@ import styled from 'styled-components'
 class App extends Component {
   render() {
     return(
-      <div>
+      <div>      
         <CenteringWrapper>
             <StyledJumbotron>
               <h4>Call your legislators and tell them...</h4>
