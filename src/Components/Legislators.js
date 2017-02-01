@@ -2,7 +2,7 @@ import React from 'react'
 import {geolocated, geoPropTypes} from 'react-geolocated'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 class Legislators extends React.Component {
   constructor(props) {
@@ -26,24 +26,25 @@ class Legislators extends React.Component {
   render () {
     return this.state.repArray ?
       <div>
+        <FadeWrapper>
         <Grid>
-          <StyledRow>
+          <Row>
             <Col xs={4}>{extractContactInfo(this.state.repArray[0])}</Col>
-            {console.log(this.state.repArray[0])}
             <Col xs={4}>{extractContactInfo(this.state.repArray[1])}</Col>
             <Col xs={4}>{extractContactInfo(this.state.repArray[2])}</Col>
-          </StyledRow>
-          <StyledRow>
+          </Row>
+          <Row>
             <Col xs={4}>Phone Number</Col>
             <Col xs={4}>Phone Number</Col>
             <Col xs={4}>Phone Number</Col>
-          </StyledRow>
-          <StyledRow>
+          </Row>
+          <Row>
             <Col xs={4}>Email</Col>
             <Col xs={4}>Email</Col>
             <Col xs={4}>Email</Col>
-          </StyledRow>
+          </Row>
         </Grid>
+        </FadeWrapper>
       </div>
       : <Loader />
   }
@@ -63,6 +64,15 @@ function extractContactInfo(repObject) {
   return returnedString
 }
 
-const StyledRow = styled(Grid)`
-  transition: opacity 1s ease-in-out;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const FadeWrapper = styled.section`
+  animation: ${fadeIn} 1s;
 `;
