@@ -28,21 +28,21 @@ class Legislators extends React.Component {
       <div>
         <FadeWrapper>
           <Grid>
-            <Row>
-              <Col xs={4}>{extractContactInfo(this.state.repArray[0])}</Col>
-              <Col xs={4}>{extractContactInfo(this.state.repArray[1])}</Col>
-              <Col xs={4}>{extractContactInfo(this.state.repArray[2])}</Col>
-            </Row>
-            <Row>
-              <Col xs={4}>Phone Number</Col>
-              <Col xs={4}>Phone Number</Col>
-              <Col xs={4}>Phone Number</Col>
-            </Row>
-            <Row>
-              <Col xs={4}>Email</Col>
-              <Col xs={4}>Email</Col>
-              <Col xs={4}>Email</Col>
-            </Row>
+            <StyledRow>
+              <Col xs={4}>{extractName(this.state.repArray[0])}</Col>
+              <Col xs={4}>{extractName(this.state.repArray[1])}</Col>
+              <Col xs={4}>{extractName(this.state.repArray[2])}</Col>
+            </StyledRow>
+            <StyledRow>
+              <Col xs={4}>{extractPhone(this.state.repArray[0])}</Col>
+              <Col xs={4}>{extractPhone(this.state.repArray[1])}</Col>
+              <Col xs={4}>{extractPhone(this.state.repArray[2])}</Col>
+            </StyledRow>
+            <StyledRow>
+              <Col xs={4}>{extractEmail(this.state.repArray[0])}</Col>
+              <Col xs={4}>{extractEmail(this.state.repArray[1])}</Col>
+              <Col xs={4}>{extractEmail(this.state.repArray[2])}</Col>
+            </StyledRow>
           </Grid>
         </FadeWrapper>
       </div>
@@ -59,9 +59,19 @@ export default geolocated({
   userDecisionTimeout: 5000,
 })(Legislators);
 
-function extractContactInfo(repObject) {
-  const returnedString = `${repObject.first_name} ${repObject.last_name} ${repObject.phone}`
-  return returnedString
+function extractName(repObject) {
+  const name = `${repObject.first_name} ${repObject.last_name}`
+  return name
+}
+
+function extractPhone(repObject) {
+  const phoneNumber = <a href={`tel:${repObject.phone}`}>{repObject.phone}</a>
+  return phoneNumber
+}
+
+function extractEmail(repObject) {
+  const emailLink = <a href={`mailto:${repObject.oc_email}`}>Email</a>
+  return emailLink
 }
 
 const fadeIn = keyframes`
@@ -75,4 +85,8 @@ const fadeIn = keyframes`
 
 const FadeWrapper = styled.section`
   animation: ${fadeIn} 1s;
+`;
+
+const StyledRow = styled(Row)`
+  font-size: large;
 `;
