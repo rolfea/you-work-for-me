@@ -3,6 +3,8 @@ import {geolocated, geoPropTypes} from 'react-geolocated'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
 import styled, { keyframes } from 'styled-components'
+import {fetchLegislators} from '../actions/legislators'
+import {connect} from "react-redux";
 
 class Legislators extends React.Component {
   constructor(props) {
@@ -11,9 +13,11 @@ class Legislators extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.coords != null) {
+    if (nextProps.coords != null && nextProps.coords !== this.props.coords) {
       const lat = nextProps.coords.latitude;
       const long = nextProps.coords.longitude;
+      this.props.dispatch(fetchLegislators(lat, long));
+
       fetch(
         `https://congress.api.sunlightfoundation.com/legislators/locate?latitude=${lat}&longitude=${long}`
       ).then((res) => res.json().then((res) =>
@@ -24,24 +28,25 @@ class Legislators extends React.Component {
   }
 
   render () {
-    return this.state.repArray ?
+    const {legislators} = this.props
+    return legislators ?
       <div>
         <FadeWrapper>
           <Grid>
             <StyledRow>
-              <Col xs={4}>{extractName(this.state.repArray[0])}</Col>
-              <Col xs={4}>{extractName(this.state.repArray[1])}</Col>
-              <Col xs={4}>{extractName(this.state.repArray[2])}</Col>
+              <Col xs={4}>{extractName(legislators[0])}</Col>
+              <Col xs={4}>{extractName(legislators[1])}</Col>
+              <Col xs={4}>{extractName(legislators[2])}</Col>
             </StyledRow>
             <StyledRow>
-              <Col xs={4}>{extractPhone(this.state.repArray[0])}</Col>
-              <Col xs={4}>{extractPhone(this.state.repArray[1])}</Col>
-              <Col xs={4}>{extractPhone(this.state.repArray[2])}</Col>
+              <Col xs={4}>{extractPhone(legislators[0])}</Col>
+              <Col xs={4}>{extractPhone(legislators[1])}</Col>
+              <Col xs={4}>{extractPhone(legislators[2])}</Col>
             </StyledRow>
             <StyledRow>
-              <Col xs={4}>{extractEmail(this.state.repArray[0])}</Col>
-              <Col xs={4}>{extractEmail(this.state.repArray[1])}</Col>
-              <Col xs={4}>{extractEmail(this.state.repArray[2])}</Col>
+              <Col xs={4}>{extractEmail(legislators[0])}</Col>
+              <Col xs={4}>{extractEmail(legislators[1])}</Col>
+              <Col xs={4}>{extractEmail(legislators[2])}</Col>
             </StyledRow>
           </Grid>
         </FadeWrapper>
@@ -50,6 +55,14 @@ class Legislators extends React.Component {
   }
 }
 
+function mapStateToProps(state, ownProps) {
+  return {
+    legislators: state.legislators,
+  };
+}
+
+const EnhancedLegislators = connect(mapStateToProps)(Legislators)
+
 Legislators.propTypes = {...Legislators.propTypes, ...geoPropTypes };
 
 export default geolocated({
@@ -57,7 +70,7 @@ export default geolocated({
     enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
-})(Legislators);
+})(EnhancedLegislators);
 
 function extractName(repObject) {
   const name = `${repObject.first_name} ${repObject.last_name}`
